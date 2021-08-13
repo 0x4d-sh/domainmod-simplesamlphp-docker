@@ -1,6 +1,6 @@
 <VirtualHost *:{{HTTP_PORT}}>
     ServerName localhost
-    DocumentRoot /var/www
+    DocumentRoot /var/www/html
     Alias /simplesaml /var/www/simplesamlphp/www
 
    <Directory /var/www/simplesamlphp>
