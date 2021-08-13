@@ -78,6 +78,9 @@ COPY config/simplesamlphp/saml.crt /var/www/simplesamlphp/cert/
 COPY config/simplesamlphp/saml.pem /var/www/simplesamlphp/cert/
 COPY config/simplesamlphp/okta.cert /var/www/simplesamlphp/cert/
 
+# Apache
+ENV HTTP_PORT 8080
+
 COPY config/apache/ports.conf.mo /tmp
 RUN /tmp/mo /tmp/ports.conf.mo > /etc/apache2/ports.conf
 COPY config/apache/simplesamlphp.conf.mo /tmp
@@ -93,7 +96,7 @@ RUN rm -rf /tmp/*
 # Set working directory
 WORKDIR /var/www/
 
-EXPOSE 8080
+EXPOSE ${HTTP_PORT}
 
 ENTRYPOINT ["bash", "entrypoint.sh"]
 
