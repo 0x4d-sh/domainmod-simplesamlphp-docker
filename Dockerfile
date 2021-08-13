@@ -24,6 +24,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
        libxml2-dev \
        locales \
        tzdata \
+       git \
     && docker-php-ext-install \
        gettext \
        mysqli \
