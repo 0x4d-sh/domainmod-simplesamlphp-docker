@@ -1,0 +1,6 @@
+
+config/simplesamlphp/saml.pem
+config/simplesamlphp/saml.crt
+config/simplesamlphp/okta.cert
+config/simplesamlphp/saml20-idp-remote.php
+docker-compose.yml
