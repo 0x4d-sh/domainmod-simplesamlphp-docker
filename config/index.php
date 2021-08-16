@@ -57,7 +57,6 @@ if ($_SESSION['s_installation_mode'] === 1) {
 # For OKTA Integration
 require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
 $auth = new \SimpleSAML\Auth\Simple('default-sp');
-$auth->requireAuth();
 $attrs = $auth->getAttributes();
 
 if ($auth->isAuthenticated()) {
