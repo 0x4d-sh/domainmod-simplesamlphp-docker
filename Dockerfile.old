@@ -13,8 +13,7 @@ ENV LOCALE9="pt_PT.UTF-8"
 ENV LOCALE10="ru_RU.UTF-8"
 ENV PGID=1000
 ENV PUID=1000
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && groupadd --gid "${PGID}" -r $CUSER && useradd -u "${PUID}" -r -g $CUSER -d /usr/src/$CUSER -s /sbin/nologin -c "Docker Image User" $CUSER \
+RUN groupadd --gid "${PGID}" -r $CUSER && useradd -u "${PUID}" -r -g $CUSER -d /usr/src/$CUSER -s /sbin/nologin -c "Docker Image User" $CUSER \
     && apt-get update \
     && apt-get install -y \ 
        cron \
