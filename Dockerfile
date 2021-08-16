@@ -13,8 +13,7 @@ ENV LOCALE9="pt_PT.UTF-8"
 ENV LOCALE10="ru_RU.UTF-8"
 ENV PGID=1000
 ENV PUID=1000
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && groupadd --gid "${PGID}" -r $CUSER && useradd -u "${PUID}" -r -g $CUSER -d /usr/src/$CUSER -s /sbin/nologin -c "Docker Image User" $CUSER \
+RUN groupadd --gid "${PGID}" -r $CUSER && useradd -u "${PUID}" -r -g $CUSER -d /usr/src/$CUSER -s /sbin/nologin -c "Docker Image User" $CUSER \
     && apt-get update \
     && apt-get install -y \ 
        cron \
@@ -33,6 +32,8 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
        simplexml \
     && apt-get clean -y \
     && rm -Rf /var/lib/apt/lists/*
+RUN curl -sSL -o /tmp/mo https://git.io/get-mo && \
+    chmod +x /tmp/mo
 RUN sed -i 's/^exec /service cron start\n\nexec /' /usr/local/bin/apache2-foreground \
     && sed -i -e "s/# $LOCALE1/$LOCALE1/" /etc/locale.gen \
     && sed -i -e "s/# $LOCALE2/$LOCALE2/" /etc/locale.gen \
@@ -51,7 +52,9 @@ ENV LC_ALL $LOCALE1
 COPY cron /etc/cron.d/cron
 COPY entrypoint.sh /usr/local/bin
 COPY php.ini /usr/local/etc/php/php.ini
-RUN git clone https://github.com/domainmod/domainmod.git /var/www/new_version/
+
+COPY source/ /var/www/new_version/
+# RUN git clone https://github.com/domainmod/domainmod.git /var/www/new_version/
 RUN chmod 0644 /etc/cron.d/cron \
     && crontab /etc/cron.d/cron \
     && mkdir -p /var/log/cron \
