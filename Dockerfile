@@ -53,12 +53,14 @@ COPY cron /etc/cron.d/cron
 COPY entrypoint.sh /usr/local/bin
 COPY php.ini /usr/local/etc/php/php.ini
 
-COPY source/ /var/www/new_version/
+# COPY source/ /var/www/new_version/
 # RUN git clone https://github.com/domainmod/domainmod.git /var/www/new_version/
-RUN chmod 0644 /etc/cron.d/cron \
-    && crontab /etc/cron.d/cron \
-    && mkdir -p /var/log/cron \
-    && chmod +x /usr/local/bin/entrypoint.sh
+COPY test/ /var/www/html
+
+# RUN chmod 0644 /etc/cron.d/cron \
+#     && crontab /etc/cron.d/cron \
+#     && mkdir -p /var/log/cron \
+#     && chmod +x /usr/local/bin/entrypoint.sh
 
 # Apache
 ENV HTTP_PORT 8080
