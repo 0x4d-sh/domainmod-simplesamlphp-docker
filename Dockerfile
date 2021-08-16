@@ -86,8 +86,11 @@ RUN /tmp/mo /tmp/ports.conf.mo > /etc/apache2/ports.conf
 COPY config/apache/simplesamlphp.conf.mo /tmp
 RUN /tmp/mo /tmp/simplesamlphp.conf.mo > /etc/apache2/sites-available/simplesamlphp.conf
 
-RUN a2dissite 000-default.conf default-ssl.conf && \
-    a2enmod rewrite && \
+# RUN a2dissite 000-default.conf default-ssl.conf && \
+#     a2enmod rewrite && \
+#     a2ensite simplesamlphp.conf
+
+RUN a2enmod rewrite && \
     a2ensite simplesamlphp.conf
 
 # Clean up
