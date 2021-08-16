@@ -24,6 +24,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
        libxml2-dev \
        locales \
        tzdata \
+       git \
     && docker-php-ext-install \
        gettext \
        mysqli \
@@ -50,11 +51,52 @@ ENV LC_ALL $LOCALE1
 COPY cron /etc/cron.d/cron
 COPY entrypoint.sh /usr/local/bin
 COPY php.ini /usr/local/etc/php/php.ini
-COPY source/ /var/www/new_version/
+
+RUN git clone https://github.com/domainmod/domainmod.git /var/www/new_version/
 RUN chmod 0644 /etc/cron.d/cron \
     && crontab /etc/cron.d/cron \
     && mkdir -p /var/log/cron \
     && chmod +x /usr/local/bin/entrypoint.sh
-EXPOSE 80
+
+RUN apt-get update && \
+    apt-get -y install apt-transport-https git curl vim --no-install-recommends && \
+    rm -r /var/lib/apt/lists/*
+
+RUN curl -sSL -o /tmp/mo https://git.io/get-mo && \
+    chmod +x /tmp/mo
+    
+# SimpleSAMLphp
+# ARG SIMPLESAMLPHP_VERSION
+# RUN curl -sSL -o /tmp/simplesamlphp.tar.gz https://github.com/simplesamlphp/simplesamlphp/releases/download/v$SIMPLESAMLPHP_VERSION/simplesamlphp-$SIMPLESAMLPHP_VERSION.tar.gz && \
+#     tar xzf /tmp/simplesamlphp.tar.gz -C /tmp && \
+#     mv /tmp/simplesamlphp-* /var/www/html/simplesamlphp && \
+#     touch /var/www/html/simplesamlphp/modules/exampleauth/enable
+# COPY config/simplesamlphp/config.php /var/www/html/simplesamlphp/config
+# COPY config/simplesamlphp/authsources.php /var/www/html/simplesamlphp/config
+# COPY config/simplesamlphp/saml20-idp-remote.php /var/www/html/simplesamlphp/metadata
+# COPY config/simplesamlphp/saml.crt /var/www/html/simplesamlphp/cert/
+# COPY config/simplesamlphp/saml.pem /var/www/html/simplesamlphp/cert/
+# COPY config/simplesamlphp/okta.cert /var/www/html/simplesamlphp/cert/
+
+# Apache
+ENV HTTP_PORT 8080
+
+# COPY config/apache/ports.conf.mo /tmp
+# RUN /tmp/mo /tmp/ports.conf.mo > /etc/apache2/ports.conf
+# COPY config/apache/dmodsaml.conf.mo /tmp
+# RUN /tmp/mo /tmp/dmodsaml.conf.mo > /etc/apache2/sites-available/dmodsaml.conf
+
+# RUN a2dissite 000-default.conf default-ssl.conf && \
+#     a2enmod rewrite && \
+#     a2ensite dmodsaml.conf
+
+# Clean up
+RUN rm -rf /tmp/*
+
+# Set working directory
+# WORKDIR /var/www/
+
+EXPOSE ${HTTP_PORT}
 ENTRYPOINT ["bash", "entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
