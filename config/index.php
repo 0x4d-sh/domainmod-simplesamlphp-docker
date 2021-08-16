@@ -82,6 +82,7 @@ if ($auth->isAuthenticated()) {
     exit;
 } else {
     $auth->requireAuth();
+    SimpleSAML_Session::getSessionFromRequest()->cleanup();
 }
 
 # End of Okta Integration
