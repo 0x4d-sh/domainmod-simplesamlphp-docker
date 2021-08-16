@@ -24,6 +24,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
        libxml2-dev \
        locales \
        tzdata \
+       git \
     && docker-php-ext-install \
        gettext \
        mysqli \
@@ -55,6 +56,7 @@ RUN chmod 0644 /etc/cron.d/cron \
     && crontab /etc/cron.d/cron \
     && mkdir -p /var/log/cron \
     && chmod +x /usr/local/bin/entrypoint.sh
+
 EXPOSE 8080
 ENTRYPOINT ["bash", "entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
