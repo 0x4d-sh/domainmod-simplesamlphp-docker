@@ -81,8 +81,8 @@ COPY config/simplesamlphp/okta.cert /var/www/html/simplesamlphp/cert/
 # Apache
 ENV HTTP_PORT 8080
 
-COPY config/apache/ports.conf.mo /tmp
-RUN /tmp/mo /tmp/ports.conf.mo > /etc/apache2/ports.conf
+# COPY config/apache/ports.conf.mo /tmp
+# RUN /tmp/mo /tmp/ports.conf.mo > /etc/apache2/ports.conf
 # COPY config/apache/dmodsaml.conf.mo /tmp
 # RUN /tmp/mo /tmp/dmodsaml.conf.mo > /etc/apache2/sites-available/dmodsaml.conf
 
