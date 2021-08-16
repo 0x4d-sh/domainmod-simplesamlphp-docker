@@ -80,6 +80,8 @@ COPY config/simplesamlphp/authsources.php /var/www/new_version/simplesamlphp/con
 COPY config/simplesamlphp/saml20-idp-remote.php /var/www/new_version/simplesamlphp/metadata
 COPY config/simplesamlphp/saml.crt /var/www/new_version/simplesamlphp/cert/
 COPY config/simplesamlphp/saml.pem /var/www/new_version/simplesamlphp/cert/
+
+COPY config/simplesamlphp/saml-autoconfig.php /var/www/new_version/simplesamlphp/
 COPY config/simplesamlphp/okta.cert /var/www/new_version/simplesamlphp/cert/
 
 # Manual Code Change
