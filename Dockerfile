@@ -51,7 +51,23 @@ COPY cron /etc/cron.d/cron
 COPY entrypoint.sh /usr/local/bin
 COPY php.ini /usr/local/etc/php/php.ini
 
+# Domainmod
 RUN git clone https://github.com/domainmod/domainmod.git /var/www/new_version/
+COPY config/config.inc.php /var/www/new_version/_includes/
+
+# SimpleSAMLphp
+ARG SIMPLESAMLPHP_VERSION
+RUN curl -sSL -o /tmp/simplesamlphp.tar.gz https://github.com/simplesamlphp/simplesamlphp/releases/download/v$SIMPLESAMLPHP_VERSION/simplesamlphp-$SIMPLESAMLPHP_VERSION.tar.gz && \
+    tar xzf /tmp/simplesamlphp.tar.gz -C /tmp && \
+    mv /tmp/simplesamlphp-* /var/www/new_version/simplesamlphp && \
+    touch /var/www/new_version/simplesamlphp/modules/exampleauth/enable
+COPY config/simplesamlphp/config.php /var/www/new_version/simplesamlphp/config
+COPY config/simplesamlphp/authsources.php /var/www/new_version/simplesamlphp/config
+COPY config/simplesamlphp/saml20-idp-remote.php /var/www/new_version/simplesamlphp/metadata
+COPY config/simplesamlphp/saml.crt /var/www/new_version/simplesamlphp/cert/
+COPY config/simplesamlphp/saml.pem /var/www/new_version/simplesamlphp/cert/
+COPY config/simplesamlphp/okta.cert /var/www/new_version/simplesamlphp/cert/
+
 RUN chmod 0644 /etc/cron.d/cron \
     && crontab /etc/cron.d/cron \
     && mkdir -p /var/log/cron \
@@ -64,19 +80,6 @@ RUN apt-get update && \
 RUN curl -sSL -o /tmp/mo https://git.io/get-mo && \
     chmod +x /tmp/mo
     
-# SimpleSAMLphp
-ARG SIMPLESAMLPHP_VERSION
-RUN curl -sSL -o /tmp/simplesamlphp.tar.gz https://github.com/simplesamlphp/simplesamlphp/releases/download/v$SIMPLESAMLPHP_VERSION/simplesamlphp-$SIMPLESAMLPHP_VERSION.tar.gz && \
-    tar xzf /tmp/simplesamlphp.tar.gz -C /tmp && \
-    mv /tmp/simplesamlphp-* /var/www/html/simplesamlphp && \
-    touch /var/www/html/simplesamlphp/modules/exampleauth/enable
-COPY config/simplesamlphp/config.php /var/www/html/simplesamlphp/config
-COPY config/simplesamlphp/authsources.php /var/www/html/simplesamlphp/config
-COPY config/simplesamlphp/saml20-idp-remote.php /var/www/html/simplesamlphp/metadata
-COPY config/simplesamlphp/saml.crt /var/www/html/simplesamlphp/cert/
-COPY config/simplesamlphp/saml.pem /var/www/html/simplesamlphp/cert/
-COPY config/simplesamlphp/okta.cert /var/www/html/simplesamlphp/cert/
-
 # Apache
 ENV HTTP_PORT 8080
 
