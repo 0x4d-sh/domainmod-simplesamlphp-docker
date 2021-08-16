@@ -67,6 +67,8 @@ COPY config/config.inc.php /var/www/new_version/_includes/
 
 # SimpleSAMLphp
 ARG SIMPLESAMLPHP_VERSION
+ARG SIMPLESAML_BASEURL
+ENV SIMPLESAML_BASEURL=${SIMPLESAML_BASEURL}
 RUN curl -sSL -o /tmp/simplesamlphp.tar.gz https://github.com/simplesamlphp/simplesamlphp/releases/download/v$SIMPLESAMLPHP_VERSION/simplesamlphp-$SIMPLESAMLPHP_VERSION.tar.gz && \
     tar xzf /tmp/simplesamlphp.tar.gz -C /tmp && \
     mv /tmp/simplesamlphp-* /var/www/new_version/simplesamlphp && \
