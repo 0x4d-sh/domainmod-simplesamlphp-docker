@@ -81,5 +81,5 @@ RUN rm -rf /tmp/*
 # WORKDIR /var/www/
 
 EXPOSE ${HTTP_PORT}
-ENTRYPOINT ["bash", "entrypoint.sh"]
+# ENTRYPOINT ["bash", "entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
