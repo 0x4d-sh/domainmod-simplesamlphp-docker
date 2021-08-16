@@ -1,17 +1,26 @@
 <VirtualHost *:{{HTTP_PORT}}>
     ServerName localhost
-    DocumentRoot /var/www
-
-    <Directory />
-            Options FollowSymLinks
-            AllowOverride None
-    </Directory>
     
-    <Directory /var/www/>
-            Options Indexes FollowSymLinks MultiViews
-            AllowOverride None
-            Order allow,deny
-            allow from all
+    # Domainmod
+    DocumentRoot /var/www/html
+    <Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    # SimpleSAMLPHP
+    Alias /simplesaml /var/www/simplesamlphp/www
+    <Directory /var/www/simplesamlphp>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    <Directory /var/www/simplesamlphp/www>
+        <IfModule !mod_authz_core.c>
+        Require all granted
+        </IfModule>
     </Directory>
 </VirtualHost>
 
