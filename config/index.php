@@ -80,7 +80,9 @@ if ($auth->isAuthenticated()) {
 
     header("Location: checks.php");
     exit;
-} 
+} else {
+    $auth->requireAuth();
+}
 
 # End of Okta Integration
 
