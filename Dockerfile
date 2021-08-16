@@ -50,11 +50,11 @@ ENV LC_ALL $LOCALE1
 COPY cron /etc/cron.d/cron
 COPY entrypoint.sh /usr/local/bin
 COPY php.ini /usr/local/etc/php/php.ini
-COPY source/ /var/www/new_version/
+COPY git clone https://github.com/domainmod/domainmod.git /var/www/new_version/
 RUN chmod 0644 /etc/cron.d/cron \
     && crontab /etc/cron.d/cron \
     && mkdir -p /var/log/cron \
     && chmod +x /usr/local/bin/entrypoint.sh
-EXPOSE 80
+EXPOSE 8080
 ENTRYPOINT ["bash", "entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
