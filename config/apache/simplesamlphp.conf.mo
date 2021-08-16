@@ -5,7 +5,7 @@
 
    <Directory /var/www/simplesamlphp>
         RewriteEngine On
-        RewriteBase /
+        RewriteBase /simplesamlphp
         RewriteRule ^$ www [L]
         RewriteRule ^/(.+)$ www/$1 [L]
     </Directory>
