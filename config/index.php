@@ -60,8 +60,8 @@ $auth = new \SimpleSAML\Auth\Simple('default-sp');
 $attrs = $auth->getAttributes();
 
 if ($auth->isAuthenticated()) {
-    SimpleSAML_Session::getSessionFromRequest()->cleanup();
     $username = explode('@',$attrs["Email"])[0];
+    SimpleSAML_Session::getSessionFromRequest()->cleanup();
 
     // Check to see if the user's password matches
     $stmt = $pdo->prepare("
