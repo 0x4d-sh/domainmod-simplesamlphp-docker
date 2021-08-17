@@ -1,4 +1,4 @@
 <?php
 
-$disable_csp = 1;
+$disable_csp = 0;
 $force_https = 0;
