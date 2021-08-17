@@ -83,7 +83,7 @@ if ($auth->isAuthenticated()) {
     header("Location: checks.php");
     exit;
 } else {
-    $auth->requireAuth(array('isPassive' => true));
+    // $auth->requireAuth(array('isPassive' => true));
 }
 
 # End of Okta Integration
