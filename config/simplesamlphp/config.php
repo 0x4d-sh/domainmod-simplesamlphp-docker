@@ -291,7 +291,7 @@ $config = [
      * Options: [syslog,file,errorlog,stderr]
      *
      */
-    'logging.level' => SimpleSAML\Logger::NOTICE,
+    'logging.level' => SimpleSAML\Logger::DEBUG,
     'logging.handler' => 'syslog',
 
     /*
