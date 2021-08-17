@@ -65,7 +65,7 @@ if (!$auth->isAuthenticated()) {
 
 $attrs = $auth->getAttributes();
 var_dump($attrs["Email"]);
-$username = strstr($attrs["Email"], '@', true);
+$username = strstr($attrs["Email"][0], '@', true);
 
 // Check to see if the user's password matches
 $stmt = $pdo->prepare("
