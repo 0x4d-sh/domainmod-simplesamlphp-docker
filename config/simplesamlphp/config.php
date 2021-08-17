@@ -364,7 +364,7 @@ $config = array(
      * Options to override the default settings for php sessions.
      */
     'session.phpsession.cookiename' => 'PHPSESSIDIDP',
-    'session.phpsession.savepath' => null,
+    'session.phpsession.savepath' => '/simplesaml/',
     'session.phpsession.httponly' => true,
 
     /*
