@@ -249,9 +249,9 @@ $config = [
      * empty array.
      */
     'debug' => [
-        'saml' => false,
+        'saml' => true,
         'backtraces' => true,
-        'validatexml' => false,
+        'validatexml' => true,
     ],
 
     /*
