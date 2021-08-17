@@ -55,35 +55,36 @@ if ($_SESSION['s_installation_mode'] === 1) {
 }
 
 // # For OKTA Integration
-require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
-$auth = new \SimpleSAML\Auth\Simple('default-sp');
+// require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
+// $auth = new \SimpleSAML\Auth\Simple('default-sp');
 
-if (!$auth->isAuthenticated()) {
-    SimpleSAML_Session::getSessionFromRequest()->cleanup();
-    $auth->requireAuth();
-}
-$attrs = $auth->getAttributes();
-$username = explode('@',$attrs["Email"])[0];
-SimpleSAML_Session::getSessionFromRequest()->cleanup();
+// if (!$auth->isAuthenticated()) {
+//     SimpleSAML_Session::getSessionFromRequest()->cleanup();
+//     $auth->requireAuth();
+// }
 
-// Check to see if the user's password matches
-$stmt = $pdo->prepare("
-    SELECT `password`
-    FROM users
-    WHERE username = :new_username
-        AND active = '1'");
-$stmt->bindValue('new_username', $username, PDO::PARAM_STR);
-$stmt->execute();
-$stored_hash = $stmt->fetchColumn();
+// $attrs = $auth->getAttributes();
+// $username = "john.doe";
+// SimpleSAML_Session::getSessionFromRequest()->cleanup();
 
-$_SESSION['s_user_id'] = $user->getUserId($username);
-$_SESSION['s_username'] = $username;
-$_SESSION['s_stored_hash'] = $stored_hash;
-$_SESSION['s_system_db_version'] = $system->getDbVersion();
-$_SESSION['s_is_logged_in'] = 1;
+// // Check to see if the user's password matches
+// $stmt = $pdo->prepare("
+//     SELECT `password`
+//     FROM users
+//     WHERE username = :new_username
+//         AND active = '1'");
+// $stmt->bindValue('new_username', $username, PDO::PARAM_STR);
+// $stmt->execute();
+// $stored_hash = $stmt->fetchColumn();
 
-header("Location: checks.php");
-exit;
+// $_SESSION['s_user_id'] = $user->getUserId($username);
+// $_SESSION['s_username'] = $username;
+// $_SESSION['s_stored_hash'] = $stored_hash;
+// $_SESSION['s_system_db_version'] = $system->getDbVersion();
+// $_SESSION['s_is_logged_in'] = 1;
+
+// header("Location: checks.php");
+// exit;
 // if ($auth->isAuthenticated()) {
 //     $attrs = $auth->getAttributes();
 //     $username = explode('@',$attrs["Email"])[0];
