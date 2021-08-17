@@ -65,7 +65,6 @@ $auth = new \SimpleSAML\Auth\Simple('default-sp');
 $auth->requireAuth();
 $attrs = $auth->getAttributes();
 $username = explode('@',$attrs["Email"])[0];
-SimpleSAML_Session::getSessionFromRequest()->cleanup();
 
 // Check to see if the user's password matches
 $stmt = $pdo->prepare("
@@ -76,6 +75,7 @@ $stmt = $pdo->prepare("
 $stmt->bindValue('new_username', $username, PDO::PARAM_STR);
 $stmt->execute();
 $stored_hash = $stmt->fetchColumn();
+SimpleSAML_Session::getSessionFromRequest()->cleanup();
 
 $_SESSION['s_user_id'] = $user->getUserId($username);
 $_SESSION['s_username'] = $username;
