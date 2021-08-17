@@ -77,7 +77,7 @@ foreach($metadata_url_for as $idp_name => $metadata_url) {
     'certificate' => 'saml.crt',
     'idp' => $entity_id,
     // NOTE: This is how you configure RelayState on the server side.
-    'RelayState' => getenv('OKTA_SSO_RELAYSTATE'),
+    // 'RelayState' => '',
   );
   
   $metadata[$entity_id] = $idp;
