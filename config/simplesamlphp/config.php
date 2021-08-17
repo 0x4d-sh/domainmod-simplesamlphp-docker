@@ -578,7 +578,8 @@ $config = [
      * Example:
      *  'session.cookie.samesite' => 'None',
      */
-    'session.cookie.samesite' => \SimpleSAML\Utils\HTTP::canSetSameSiteNone() ? 'None' : null,
+    // 'session.cookie.samesite' => \SimpleSAML\Utils\HTTP::canSetSameSiteNone() ? 'None' : null,
+    'session.cookie.samesite' => strpos($userAgent, 'Chrome/') === false ? null : 'None',
 
     /*
      * Options to override the default settings for php sessions.

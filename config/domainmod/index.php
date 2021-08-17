@@ -58,11 +58,11 @@ if ($_SESSION['s_installation_mode'] === 1) {
 require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
 $auth = new \SimpleSAML\Auth\Simple('default-sp');
 
-// if (!$auth->isAuthenticated()) {
-//     SimpleSAML_Session::getSessionFromRequest()->cleanup();
-//     $auth->requireAuth();
-// }
-$auth->requireAuth();
+if (!$auth->isAuthenticated()) {
+    SimpleSAML_Session::getSessionFromRequest()->cleanup();
+    $auth->requireAuth();
+}
+
 $attrs = $auth->getAttributes();
 $username = explode('@',$attrs["Email"])[0];
 
