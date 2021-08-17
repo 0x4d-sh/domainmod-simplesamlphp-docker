@@ -58,9 +58,12 @@ if ($_SESSION['s_installation_mode'] === 1) {
 require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
 $auth = new \SimpleSAML\Auth\Simple('default-sp');
 $attrs = $auth->getAttributes();
-
+$log->warning($attrs);
 if ($auth->isAuthenticated()) {
+    $log->warning($auth->isAuthenticated());
     $username = explode('@',$attrs["Email"])[0];
+
+    $log->warning($username);
     SimpleSAML_Session::getSessionFromRequest()->cleanup();
 
     // Check to see if the user's password matches
