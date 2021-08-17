@@ -73,6 +73,8 @@ foreach($metadata_url_for as $idp_name => $metadata_url) {
   $config[$idp_name] = array(
     'saml:SP',
     'entityID' => null,
+    'privatekey' => 'saml.pem',
+    'certificate' => 'saml.crt',
     'idp' => $entity_id,
     // NOTE: This is how you configure RelayState on the server side.
     // 'RelayState' => "",
