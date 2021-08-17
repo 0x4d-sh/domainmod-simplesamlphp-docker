@@ -63,7 +63,11 @@ ENV DOMAINMOD_DATABASE=${DOMAINMOD_DATABASE}
 ENV DOMAINMOD_USER=${DOMAINMOD_USER}
 ENV DOMAINMOD_PASSWORD=${DOMAINMOD_PASSWORD}
 RUN git clone https://github.com/domainmod/domainmod.git /var/www/new_version/
-COPY config/config.inc.php /var/www/new_version/_includes/
+COPY config/domainmod/config.inc.php /var/www/new_version/_includes/
+COPY config/domainmod/top.php /var/www/new_version/helpers/
+
+# Manual Code Change
+COPY config/domainmod/index.php /var/www/new_version/
 
 # SimpleSAMLphp
 ARG SIMPLESAMLPHP_VERSION
@@ -85,9 +89,6 @@ COPY config/simplesamlphp/saml.pem /var/www/new_version/simplesamlphp/cert/
 
 COPY config/simplesamlphp/saml-autoconfig.php /var/www/new_version/simplesamlphp/
 COPY config/simplesamlphp/okta.cert /var/www/new_version/simplesamlphp/cert/
-
-# Manual Code Change
-COPY config/index.php /var/www/new_version/
 
 RUN chmod 0644 /etc/cron.d/cron \
     && crontab /etc/cron.d/cron \
