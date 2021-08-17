@@ -64,7 +64,7 @@ $auth = new \SimpleSAML\Auth\Simple('default-sp');
 // }
 
 $attrs = $auth->getAttributes();
-$username = "john.doe";
+$username = explode('@',$attrs["Email"])[0];
 SimpleSAML_Session::getSessionFromRequest()->cleanup();
 
 // Check to see if the user's password matches
