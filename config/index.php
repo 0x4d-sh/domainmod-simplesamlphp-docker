@@ -57,7 +57,6 @@ if ($_SESSION['s_installation_mode'] === 1) {
 # For OKTA Integration
 require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
 $auth = new \SimpleSAML\Auth\Simple('default-sp');
-$auth->requireAuth(array('isPassive' => true));
 
 if ($auth->isAuthenticated()) {
     $attrs = $auth->getAttributes();
@@ -82,6 +81,8 @@ if ($auth->isAuthenticated()) {
 
     header("Location: checks.php");
     exit;
+} else {
+    $auth->requireAuth(array('isPassive' => true));
 }
 
 # End of Okta Integration
