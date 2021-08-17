@@ -27,7 +27,7 @@
  *   This should also be stored in your production datastore.
  */
 $metadata_url_for = array(
-    'OKTA' => getenv('OKTA_SSO_METADATA'),
+    'default-sp' => getenv('OKTA_SSO_METADATA'),
 );
 
 foreach($metadata_url_for as $idp_name => $metadata_url) {
