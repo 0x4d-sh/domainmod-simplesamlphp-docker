@@ -62,7 +62,7 @@ $auth = new \SimpleSAML\Auth\Simple('default-sp');
 //     SimpleSAML_Session::getSessionFromRequest()->cleanup();
 //     $auth->requireAuth();
 // }
-
+$auth->requireAuth();
 $attrs = $auth->getAttributes();
 $username = explode('@',$attrs["Email"])[0];
 SimpleSAML_Session::getSessionFromRequest()->cleanup();
