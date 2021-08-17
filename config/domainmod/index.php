@@ -64,6 +64,7 @@ if (!$auth->isAuthenticated()) {
 }
 
 $attrs = $auth->getAttributes();
+var_dump($attrs["Email"]);
 $username = strstr($attrs["Email"], '@', true);
 
 // Check to see if the user's password matches
