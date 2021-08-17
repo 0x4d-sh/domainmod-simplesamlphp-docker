@@ -899,7 +899,7 @@ $config = [
      *
      * Defaults to true.
      */
-    'production' => true,
+    'production' => false,
 
     /*
      * SimpleSAMLphp modules can host static resources which are served through PHP.
