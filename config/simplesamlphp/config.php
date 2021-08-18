@@ -292,7 +292,7 @@ $config = [
      *
      */
     'logging.level' => SimpleSAML\Logger::DEBUG,
-    'logging.handler' => 'syslog',
+    'logging.handler' => 'stderr',
 
     /*
      * Specify the format of the logs. Its use varies depending on the log handler used (for instance, you cannot
