@@ -33,8 +33,10 @@ require_once DIR_INC . '/debug.inc.php';
 require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
 $auth = new \SimpleSAML\Auth\Simple('default-sp');
 
-$auth->logout();
-SimpleSAML_Session::getSessionFromRequest()->cleanup();
+if ($auth->isAuthenticated()) {
+    $auth->logout();
+    SimpleSAML_Session::getSessionFromRequest()->cleanup();
+}
 
 $_SESSION = array();
 
