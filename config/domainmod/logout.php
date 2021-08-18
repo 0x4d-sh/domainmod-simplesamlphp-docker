@@ -30,14 +30,6 @@ $system = new DomainMOD\System();
 
 require_once DIR_INC . '/debug.inc.php';
 
-require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
-$auth = new \SimpleSAML\Auth\Simple('default-sp');
-
-if ($auth->isAuthenticated()) {
-    $auth->logout();
-    SimpleSAML_Session::getSessionFromRequest()->cleanup();
-}
-
 $_SESSION = array();
 
 if (ini_get("session.use_cookies")) {
@@ -48,6 +40,16 @@ if (ini_get("session.use_cookies")) {
 }
 
 session_destroy();
+
+# For OKTA Integration
+require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
+$auth = new \SimpleSAML\Auth\Simple('default-sp');
+
+if ($auth->isAuthenticated()) {
+    $auth->logout();
+    SimpleSAML_Session::getSessionFromRequest()->cleanup();
+}
+# End of Okta Integration
 
 header('Location: ' . $web_root . "/");
 exit;
