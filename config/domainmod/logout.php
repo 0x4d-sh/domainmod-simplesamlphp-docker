@@ -30,6 +30,12 @@ $system = new DomainMOD\System();
 
 require_once DIR_INC . '/debug.inc.php';
 
+require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
+$auth = new \SimpleSAML\Auth\Simple('default-sp');
+
+$auth->logout();
+SimpleSAML_Session::getSessionFromRequest()->cleanup();
+
 $_SESSION = array();
 
 if (ini_get("session.use_cookies")) {
@@ -40,12 +46,6 @@ if (ini_get("session.use_cookies")) {
 }
 
 session_destroy();
-
-require_once DIR_ROOT . '/simplesamlphp/lib/_autoload.php';
-$auth = new \SimpleSAML\Auth\Simple('default-sp');
-
-$auth->logout();
-SimpleSAML_Session::getSessionFromRequest()->cleanup();
 
 header('Location: ' . $web_root . "/");
 exit;
